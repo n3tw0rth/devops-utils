@@ -1,4 +1,4 @@
-# This is used to create keyvalut secrets
+# This is used to read/create keyvalut secrets
 
 ```bash
 
