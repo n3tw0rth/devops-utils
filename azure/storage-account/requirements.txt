@@ -1,0 +1,4 @@
+azure-identity
+azure-storage-blob
+azure-mgmt-storage
+azure-mgmt-subscription
