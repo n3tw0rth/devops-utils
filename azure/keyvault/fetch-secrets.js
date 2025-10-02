@@ -6,6 +6,8 @@ async function main() {
   const credential = new DefaultAzureCredential();
   const url = `https://${process.env.KEYVAULT_NAME}.vault.azure.net`;
   const client = new SecretClient(url, credential);
+
+  // NOTE: update the filter to fetch specific keys, keeping it empty return all the keys from the keyvault
   const filter = "";
 
   let secretsData = {};

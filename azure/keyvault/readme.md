@@ -2,6 +2,6 @@
 
 ```bash
 
-KEYVAULT_NAME=<keyvault-name> node main.js
+KEYVAULT_NAME=<keyvault-name> node ./fetch-secrets.js
 
 ```

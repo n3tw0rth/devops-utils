@@ -6,7 +6,7 @@ const secrets = require("./secrets.json")
 async function main() {
   const credential = new DefaultAzureCredential();
 
-  const url = "https://" + process.env.KEYVAULT_NAME + ".vault.azure.net";
+  const url = `https://${process.env.KEYVAULT_NAME}.vault.azure.net`
 
   const client = new SecretClient(url, credential);
 
