@@ -13,7 +13,7 @@ def write_to_file(subscription_id: str, data):
     with open(f"{subscription_id}.csv","w") as file:
         writer = csv.writer(file)
 
-        writer.writerow(["Account", "Service", "Value"])
+        writer.writerow(["Storage Account", "Container", "Capacity"])
 
         for account, services in data.items():
             for service, value in services.items():
@@ -47,22 +47,25 @@ def list_containers(storage_account_name: str)-> dict[str,int]:
             credential=credential)
 
     containers = blob_service_client.list_containers()
-    for container in containers:
-        print(f"[+] Container {container.name} ",end="")
-        try:
-            result = subprocess.run(
-                ["./blob-size.sh", container.name , storage_account_name],
-                capture_output=True,
-                text=True
-            )
+    try:
+        for container in containers:
+            print(f"[+] Container {container.name} ",end="")
+            try:
+                result = subprocess.run(
+                    ["./blob-size.sh", container.name , storage_account_name],
+                    capture_output=True,
+                    text=True
+                )
 
-            size_in_bytes = 0  if result.stdout == "" else int(result.stdout.strip())
-            formatted_value = human_readable_size(size_in_bytes)
-            container_sizes[container.name] = formatted_value
+                size_in_bytes = 0  if result.stdout == "" else int(result.stdout.strip())
+                formatted_value = human_readable_size(size_in_bytes)
+                container_sizes[container.name] = formatted_value
 
-            print(f"Size: \033[94m{formatted_value}\033[0m")
-        except:
-            print(f"\t\033[91mError: Failed to get the size\033[0m")
+                print(f"Size: \033[94m{formatted_value}\033[0m")
+            except:
+                print(f"\t\033[91mError: Failed to get the size\033[0m")
+    except:
+        print(f"\t\033[91mError: Failed to get the containers\033[0m")
 
     return  container_sizes
         
